@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "breastcancermodel",
+  "private_key_id": "cd9209989a9778f3253ddd1f71a5ab3f3caf2795",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDithQ4Y0vIZhcz\ny+NoOVvWcNP2QOm1HHrSko17L5XQ+dRuXHcnLbT2a3MG+PX5ULw62j9fuD/shVtE\nH+lU9rZgEfYj5WM/3cRijec/Q8tNDsng3heX2Ro1zObICZQMPyu1ULRJauIYVTfm\nmzNq/Q3dfa3HM5ehVbGP9COY2moPxGmELuORbMg3Mbheu5xl3vW02bzRA5dPGYzm\njnD7MlHuAjygUveSyfEKDp8bw0g8p44UtpyElXm49FFOcgZjfvRKvD1nhlm+el7c\nK50qz/pfTg8jZQDRE+NH1eUlpVFQAg8wg1Jv1pO1qGpSiUqZ94FH4/7NOa+NDa+5\nrx3JKVLXAgMBAAECggEAC0Ph6FViyB/uijfY4m5rNlIf7i4WjtXN8pWuqw7Xwm0P\nlbZJg2xdgBshuZh4XH2bBM+gc4irwHx15wIw7XRe5pIt6WW2E0/ZOM51Tar4OKmB\n9YcDpBt5FnBKjWkQbrVa3iUW+Ejz2CKv5ukSWoAdhsJ+dpYFNFKWQqFufWNo/sR7\nSNNTzOXUDDYfCfosEqw9olOJ8zd6MpuFMh/CIqaJq0r3NJ0sD2uD7rdYhNtD1Lxo\nktFzcvIkkf3r/wZSY9G33BFOy9Wonzgii3dg2JUxRVGMMN5jpOYR/7IaGnDfmBTV\nNmjI+Cme8USzBf2nym7ZAfxRh59UhNFRO6FiJCc+kQKBgQD222yHaQcA2YXXfiEZ\nMtsSL3L3Yfl6NO8fKLQN/ggLAzv2jGyJ6VEo1u2nGLZ2X3qJ7hijJHPqTsI0FbjO\n3u49JPh2zHAfzHsPZNxa0gCmsk1xZ5uS2TK+eSvtYvc9ZvBO6WxF/GoNWlYky7Tk\n/rDjII8Gu3QEKKXrbrnsZy9yhwKBgQDrG6RR/8jLfWrYu7fKoWauD0X34e/JDy6m\nXsaEScxZj7swiCM4l3a13Wt5eFEebpbXy71bzkxxGWwriH1cTBL2IfBcCTnNPAeV\nTgtaZ749gZ9zcmVvH/RpaiaLWeRbSy7QffYep1cONPyj4qx6quikTGk/7OoENk/x\nf7KCMWchMQKBgQCfeFafD2E/0kXdVRTKs4jEMbTiTP+eS83h4iiXFXFas+crucFw\nQjJ04Iu8M4HD7KA7tH1j/uuHBQP+I740nd1n0JdWH3GbiTxCUJTtctaK2Yqf5R+i\neP+H/r066IDxwKsjPzX77DkSkTYvJQ2iFUpuH51l6vjiquOsuOYQ6wPCxwKBgEi3\nffVWtZYqrldmiAwGK6n+U1e969o19enDOodEBA5XZEA4exxPzImneExTqFNPRRxt\niZ3RitcYU9qLFqrrZJn4GU1+FQCjZn0JbH2DxNVlOBoO8cyTB5drG4zSOsz5zfry\nWqNUgpqETPerbklqfxYCBDOfZSn0WnmJU37tJMahAoGBAOrwxx0o4UX2XbF6QtQ6\nH6TTAGbxtTy+MLylUvW9TDRH+G5RHDabDClpMXq1zU+62B5oFOO5LfGR6Mr1i7jT\nETF91ASb7CVs4RZMXF6gXRQcEUrQstY8eezgav2Y5KTqbFFoP3mXQlUjHphj+8Tr\nCqKtPn9OBJ49f0SfGguJn8oi\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-ixxwb@breastcancermodel.iam.gserviceaccount.com",
+  "client_id": "112763757932321839224",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ixxwb%40breastcancermodel.iam.gserviceaccount.com"
+}
