@@ -6,7 +6,7 @@ from firebase_admin import auth, credentials
 from rest_framework.authentication import BaseAuthentication
 from .exceptions import FirebaseAuthException, InvalidToken, TokenNotFound
 cred = credentials.Certificate(os.path.join(
-    os.path.dirname(__file__), 'firebaseconfig.json'))
+    os.path.dirname(__file__), 'breastcancermodel-firebase-adminsdk-ixxwb-4593b2d839.json'))
 
 app = firebase_admin.initialize_app(cred)
 
@@ -17,12 +17,15 @@ class FirebaseAuthentication(BaseAuthentication):
 
         if not auth_header:
             raise TokenNotFound()
-
-        token = auth_header.split(' ').pop()
+        token = auth_header
+        print('getting verified')
         try:
             decoded_token = auth.verify_id_token(token)
-        except Exception:
-            raise InvalidToken()
+           
+            print(decoded_token['email'])
+        except Exception as e:
+            print(e)
+            #raise InvalidToken()
 
         try:
             uid = decoded_token.get('uid')

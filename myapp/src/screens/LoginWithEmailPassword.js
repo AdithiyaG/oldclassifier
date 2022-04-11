@@ -12,6 +12,7 @@ const SignInButton = ({ email, password, callback }) => {
       const res = await signInWithEmailAndPassword(auth, email, password);
       console.log(res.user);
       console.log(res.user.email);
+      
       const user = res.user;
       let idToken = await user.getIdToken(true);
       callback(idToken);
@@ -19,8 +20,7 @@ const SignInButton = ({ email, password, callback }) => {
       const response = await fetch("http://localhost:8000/api1/verified", {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `JWT ${idToken}`,
+          Authorization: idToken,
         },
       });
       const data = await response.json();

@@ -16,7 +16,7 @@ const firebaseConfig = {
   projectId: "breastcancermodel",
   storageBucket: "breastcancermodel.appspot.com",
   messagingSenderId: "892641583634",
-  appId: "1:892641583634:web:1984483dd697023f1d2ecb"
+  appId: "1:892641583634:web:ec68a3b6b9b0ca281d2ecb"
 };
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);

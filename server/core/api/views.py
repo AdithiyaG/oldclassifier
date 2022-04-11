@@ -27,6 +27,7 @@ class RegisterUser(APIView):
     def post(self, request):
         User = get_user_model()
         user = User.objects.get(username=request.user.username)
+        print(request,request.user)
         firebase_data = auth.get_user(user.username)
         user.email = firebase_data.email
         user.save()

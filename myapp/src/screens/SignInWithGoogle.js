@@ -7,6 +7,7 @@ const GoogleButton = ({ callback }) => {
  
   const onClick = async () => {
     const res = await signInWithPopup(auth, new GoogleAuthProvider());
+    console.log(res.credential.idToken)
     const user = res.user;
     console.log(user);
     let idToken = await user.getIdToken(true);

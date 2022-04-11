@@ -6,17 +6,19 @@ const SignUp = ({ email, password, callback }) => {
   const registerNewUser = async () => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
+     
       const user = res.user;
-      console.log(res.user);
+      // console.log(res.credential.idToken)
+      console.log(res);
       let idToken = await user.getIdToken(true); //true is for refreshing token
-      callback(idToken);
+      console.log(idToken)
+      
 
       // Verify and register user with backend
       const response = await fetch("http://localhost:8000/api1/register", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `JWT ${idToken}`,
+          Authorization: idToken,
         },
       });
       const data = await response.json();
