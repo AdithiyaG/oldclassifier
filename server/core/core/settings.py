@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'firebase_auth',
     'post',
-    'api'
+    'api',
+    'classifer'
 ]
 
 MIDDLEWARE = [
@@ -135,10 +136,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'firebase_auth.authentication.FirebaseAuthentication',
-    ),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework.authentication.SessionAuthentication',
+    #     'firebase_auth.authentication.FirebaseAuthentication',
+    # ),
 }
 
 

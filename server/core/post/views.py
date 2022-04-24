@@ -8,7 +8,7 @@ from rest_framework import status
 # Create your views here.
 
 class PostView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request, *args, **kwargs):
@@ -17,7 +17,11 @@ class PostView(APIView):
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
-        posts_serializer = PostSerializer(data=request.data)
+        print(request.data)
+        data2=request.data.copy()
+        data2['pname']='Maligant'
+        print(data2)
+        posts_serializer = PostSerializer(data=data2)
         if posts_serializer.is_valid():
             posts_serializer.save()
             return Response(posts_serializer.data, status=status.HTTP_201_CREATED)
