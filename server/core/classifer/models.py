@@ -22,4 +22,6 @@ class ClassifierAPI(models.Model):
     ImagePath=models.ImageField()
     UserId=models.CharField(max_length=500)
     UsedDate=models.DateField(auto_now_add=True)
+    type=models.CharField(max_length=500,blank=True)
+    remarks=models.CharField(max_length=1000,blank=True)
     

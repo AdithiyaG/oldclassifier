@@ -18,7 +18,7 @@ class Predictor(AppConfig):
     G = 5.0
     OFFSET = 25.0
     name = 'Predict'
-    model_path = "F:/Study Material/Capstone/vit-breakhis-all-20220418T154534Z-001/vit-breakhis-all/checkpoint-2000"
+    model_path = "F:/Study Material/Capstone/vit-breakhis-all-20220502T204711Z-001/vit-breakhis-all/checkpoint-2000"
     feature_extractor = ViTFeatureExtractor.from_pretrained(model_path)
     model = ViTForImageClassification.from_pretrained(model_path)
     @classmethod
