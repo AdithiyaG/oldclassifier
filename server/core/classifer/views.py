@@ -1,8 +1,9 @@
+from email.headerregistry import ContentDispositionHeader
 from rest_framework.parsers import JSONParser
 from .models import ClassifierAPI,PatientAPI
 from .serializers import ClassifiertSerializer,PatientSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
-from django.http import FileResponse
+from django.http import FileResponse,HttpResponse
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
@@ -15,6 +16,8 @@ import PIL
 import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import Paragraph
 
 class PatientView(APIView):
     parser_classes = (MultiPartParser, FormParser,JSONParser)
@@ -101,9 +104,10 @@ class ReportView(APIView):
         if(id!=None ):
             result = ClassifierAPI.objects.filter(Id=id)
             MedicalId=result[0].MedicalId
+            useddate=result[0].UsedDate
             patient = PatientAPI.objects.filter(MedicalId=MedicalId)
             today = date.today()
-            d2 = today.strftime("%B %d, %Y")
+            d2 = useddate.strftime("%B %d, %Y")
             l=['Name','Gender','Age']
             l1=[]
             r=['Date of Birth','Height','Weight']
@@ -117,7 +121,6 @@ class ReportView(APIView):
                 r1.append(str(x.PatientDOB))
                 r1.append(str(x.PatientHeight))
                 r1.append(str(x.PatientWeight))
-            print(l1,r1)
             buf=io.BytesIO()
             c=canvas.Canvas(buf,pagesize=letter)
             c.drawInlineImage('3rd.png',30,600,200,200)
@@ -130,6 +133,7 @@ class ReportView(APIView):
             c.setFontSize(18)
             c.drawText(thead)
             c.line(40,600,550,600)
+            c.setStrokeColorRGB(0.75,0.75,0.75)
             c.rect(40,580,520,-100)
             left=c.beginText(60,560)
             for x in l:
@@ -173,7 +177,10 @@ class ReportView(APIView):
             c.showPage()
             c.save()
             buf.seek(0)
+            filename=l1[0]+'_'+str(useddate)
             
-
-            return FileResponse(buf,as_attachment=True,filename='id.pdf', content_type='application/pdf')
+            response =HttpResponse(buf,content_type='application/pdf')
+            response.headers['Content-Disposition'] = '"{}"'.format(filename)
+            print(response)
+            return response
 
