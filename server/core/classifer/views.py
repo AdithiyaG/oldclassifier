@@ -1,3 +1,4 @@
+from ctypes import alignment
 from email.headerregistry import ContentDispositionHeader
 from rest_framework.parsers import JSONParser
 from .models import ClassifierAPI,PatientAPI
@@ -16,7 +17,7 @@ import PIL
 import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Paragraph
 
 class PatientView(APIView):
@@ -106,8 +107,13 @@ class ReportView(APIView):
             MedicalId=result[0].MedicalId
             useddate=result[0].UsedDate
             patient = PatientAPI.objects.filter(MedicalId=MedicalId)
-            today = date.today()
             d2 = useddate.strftime("%B %d, %Y")
+            my_Style=ParagraphStyle('My Para style',
+            fontName='Times-Roman',
+            fontSize=14,
+            leading=15,
+            alignment=0
+            )
             l=['Name','Gender','Age']
             l1=[]
             r=['Date of Birth','Height','Weight']
@@ -116,30 +122,31 @@ class ReportView(APIView):
             for x in patient:
                 l1.append(x.PatientName)
                 l1.append(x.PatientGender)
-                l1.append(str(x.PatientAge))
+                l1.append(str(x.PatientAge) +' Y')
             for x in patient:
                 r1.append(str(x.PatientDOB))
-                r1.append(str(x.PatientHeight))
-                r1.append(str(x.PatientWeight))
+                r1.append(str(x.PatientHeight)+' cms')
+                r1.append(str(x.PatientWeight) +' Kgs')
             buf=io.BytesIO()
             c=canvas.Canvas(buf,pagesize=letter)
             c.drawInlineImage('3rd.png',30,600,200,200)
-            tdate = c.beginText(400,700)
+            tdate = c.beginText(400,680)
             tdate.textLine(d2)
             c.drawText(tdate)
             c.line(40,660,550,660)
             thead=c.beginText(40,620)
             thead.textLine('Oncogenomics Report for ID '+ str(MedicalId))
-            c.setFontSize(18)
+            c.setFont("Helvetica-Bold",18)
             c.drawText(thead)
             c.line(40,600,550,600)
+            c.setLineWidth(0.2)
             c.setStrokeColorRGB(0.75,0.75,0.75)
-            c.rect(40,580,520,-100)
+            c.rect(40,580,520,-90)
             left=c.beginText(60,560)
             for x in l:
                 left.textLine(x)
                 left.textLine('')
-            c.setFontSize(13)
+            c.setFont("Times-Roman",13)
             c.drawText(left)
             leftv=c.beginText(105,560)
             for x in l1:
@@ -159,28 +166,56 @@ class ReportView(APIView):
                 rightv.textLine('')
             c.setFontSize(13)
             c.drawText(rightv)
-            c.drawString(40,450,'Result :')
-            rv=c.beginText(90,450)
-            rv.textLine(result[0].Class)
+            c.setStrokeColorRGB(0,0,0)
+            c.setFillColorRGB(0.19,0.58,0.58)
+            c.rect(140,460,300,-40,fill=1)
+            c.setFillColorRGB(1,1,1)
+            c.setFont("Helvetica-Bold",16)
+            c.drawString(225,440,' Predicted Result')
+            c.setStrokeColorRGB(0,0,0)
+            c.rect(140,420,300,-60,fill=0)
+            c.setFillColorRGB(0.19,0.58,0.58)
+            c.setFont("Helvetica-Bold",18)
+            rv=c.beginText(247,390)
+            s3=result[0].Class
+            rv.textLine(s3)
             c.drawText(rv)
-            c.drawString(40,420,'Specimen Image used :')
+            c.setFillColorRGB(0,0,0)
+            c.setFont("Helvetica-Bold",12)
+            c.drawString(40,340,'Specimen Image used :')
             breast=PIL.Image.open(result[0].ImagePath)
-            c.drawInlineImage(breast,40,200,150,150)
-            c.drawString(40,150,'Specimen :')
-            typeview=c.beginText(130,150)
-            typeview.textLine(result[0].type)
-            c.drawText(typeview)
-            c.drawString(40,100,'Remarks :')
-            remarksview=c.beginText(130,100)
-            remarksview.textLine(result[0].remarks)
-            c.drawText(remarksview)
+            c.drawInlineImage(breast,40,180,200,150)
+            c.drawString(40,160,'Specimen :')
+            s=str(result[0].type)
+            ptype=Paragraph(s,my_Style)
+            ptype.wrapOn(c,500,50)
+            if(len(s)>80):
+                ptype.drawOn(c,40,100)
+            else:
+                ptype.drawOn(c,40,140)
+            c.drawString(40,80,'Remarks :')
+            s2=str(result[0].remarks)
+            premarks=Paragraph(s2,my_Style)
+            premarks.wrapOn(c,500,40)
+            if(len(s2)>80):
+                premarks.drawOn(c,40,40)
+            else:
+                premarks.drawOn(c,40,60)
+            if('malignant'==s3):
+                c.drawString(40,20,'Prescribed Body Surface Area Dosing: ')
+                rdose=c.beginText(40,5)
+                dose=1*0.007184*(int(patient[0].PatientHeight)**0.725)*(int(patient[0].PatientWeight)**0.425)
+                dose=format(dose,".2f")
+                rdose.textLine(str(dose) +'g')
+                c.setFont('Helvetica',11)
+                c.drawText(rdose)
+            c.drawString(40,3,"")
             c.showPage()
             c.save()
             buf.seek(0)
-            filename=l1[0]+'_'+str(useddate)
+            filename=str(MedicalId)+'_'+l1[0]+'_'+str(useddate)
             
             response =HttpResponse(buf,content_type='application/pdf')
             response.headers['Content-Disposition'] = '"{}"'.format(filename)
-            print(response)
             return response
 
